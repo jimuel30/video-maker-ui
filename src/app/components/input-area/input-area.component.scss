@@ -1,0 +1,28 @@
+#form{
+  //background: linear-gradient(to bottom right, #133156, #161d37);
+  //background-color: #161d37;
+  background-color: #070b14;
+  font-family: "Rem", serif;
+
+}
+#form button, #form input{
+  border-radius: 0;
+}
+
+
+#form button{
+  font-weight: bolder;
+  //background: linear-gradient(to bottom right, #12c0f7, #a727ff)
+  background-color: #2fbf86;
+  color: white;
+  border:none;
+  font-family: "Rem", serif;
+
+}
+#form input{
+background-color: white;
+  color: black;
+}
+#labels label{
+  cursor: pointer;
+}
