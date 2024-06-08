@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import {InputAreaComponent} from "./components/input-area/input-area.component";
+import {VideoAreaComponent} from "./components/video-area/video-area.component";
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, InputAreaComponent],
+  imports: [RouterOutlet, InputAreaComponent, VideoAreaComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })

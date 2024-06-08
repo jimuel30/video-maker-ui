@@ -1,0 +1,33 @@
+#video-area {
+  position: fixed;
+  top: 50%; /* Position from the top */
+  left: 50%; /* Position from the left */
+  transform: translate(-50%, -50%); /* Centering trick */
+  border-radius: 5px;
+  aspect-ratio: 1 / 1;
+  font-family: "Rem", serif;
+
+}
+
+#btn-section label{
+  font-weight: bolder;
+  border-radius: 0;
+  outline: none;
+
+  border-width: 0;
+  border-bottom-width: 1px;
+}
+
+#video-container{
+  width: 100%;
+  min-height: 100%;
+}
+
+
+
+@media only screen and (max-width: 600px) {
+  #video-area {
+    aspect-ratio: auto;
+    min-height: 60vh;
+  }
+}

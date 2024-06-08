@@ -9,4 +9,18 @@ import { Component } from '@angular/core';
 })
 export class VideoAreaComponent {
 
+
+  queActive = true;
+
+  queClickHandler():void{
+    this.queActive = true
+  }
+
+
+  completedClickHandler() :void{
+    this.queActive = false
+  }
+
+
+
 }
