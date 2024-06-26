@@ -1,32 +1,43 @@
-import { Component } from '@angular/core';
-import {ApiCallService} from "../../service/api-call.service";
-import {FormsModule} from "@angular/forms";
+import { Component,  Output , EventEmitter} from '@angular/core';
+import { ApiCallService } from '../../service/api-call.service';
+import { FormsModule } from '@angular/forms';
+
+
 
 @Component({
   selector: 'app-input-area',
   standalone: true,
-  imports: [
-    FormsModule
-  ],
+  imports: [FormsModule],
   templateUrl: './input-area.component.html',
-  styleUrl: './input-area.component.scss'
+  styleUrl: './input-area.component.scss',
 })
 export class InputAreaComponent {
 
+
+  @Output() toggleEvent = new EventEmitter<void>();
+
+  callToggleShow(): void {
+    // Emit the event to trigger the parent's toggleShow method
+    this.toggleEvent.emit();
+  }
+
+
+
+
+
+
   constructor(private apiService: ApiCallService) {}
 
-  url!:string;
+  url!: string;
 
-  errorString = ""
+  errorString = '';
 
-  submitHandler(){
-
+  submitHandler() {
     this.apiService.convertToVideo(this.url).subscribe({
       next: (v) => {
-        if(200 === v.status){
+        if (200 === v.status) {
           //add to que
-        }
-        else{
+        } else {
           this.errorString = v.message;
         }
       },
@@ -38,11 +49,4 @@ export class InputAreaComponent {
 
     return false;
   }
-
-
-
-
-
-
-
 }

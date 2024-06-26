@@ -1,4 +1,4 @@
-import {Component, ElementRef, ViewChild} from '@angular/core';
+import {Component, ElementRef, EventEmitter, Output, ViewChild} from '@angular/core';
 import {VideoItemComponent} from "../video-item/video-item.component";
 import {Video} from "../../model/Video";
 
@@ -12,6 +12,17 @@ import {Video} from "../../model/Video";
   styleUrl: './video-area.component.scss'
 })
 export class VideoAreaComponent {
+
+
+  @Output() toggleEvent = new EventEmitter<void>();
+
+  callToggleShow(): void {
+    // Emit the event to trigger the parent's toggleShow method
+    this.toggleEvent.emit();
+  }
+
+
+
 
 
   @ViewChild('videoWrapper1') videoWrapper1!: ElementRef;

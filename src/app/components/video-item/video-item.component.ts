@@ -1,4 +1,8 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {WebsocketService} from "../../service/websocket.service";
+import {io} from "socket.io-client";
+import {Message} from "../../model/Message";
+
 
 @Component({
   selector: 'app-video-item',
@@ -7,6 +11,19 @@ import { Component } from '@angular/core';
   templateUrl: './video-item.component.html',
   styleUrl: './video-item.component.scss'
 })
-export class VideoItemComponent {
+
+
+export class VideoItemComponent implements OnInit{
+
+
+
+  ngOnInit(): void {
+
+
+  }
+
+
+
+
 
 }
