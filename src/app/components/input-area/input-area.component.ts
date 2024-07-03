@@ -1,6 +1,7 @@
 import { Component,  Output , EventEmitter} from '@angular/core';
 import { ApiCallService } from '../../service/api-call.service';
 import { FormsModule } from '@angular/forms';
+import {StorageService} from "../../service/storage.service";
 
 
 
@@ -21,22 +22,22 @@ export class InputAreaComponent {
     this.toggleEvent.emit();
   }
 
-
-
-
-
-
-  constructor(private apiService: ApiCallService) {}
+  constructor(private apiService: ApiCallService, private  storageService:StorageService) {}
 
   url!: string;
 
   errorString = '';
 
   submitHandler() {
+
+
+
     this.apiService.convertToVideo(this.url).subscribe({
       next: (v) => {
         if (200 === v.status) {
-          //add to que
+          const savedVideos = this.storageService.getVideosLocal();
+          savedVideos.push(v.data)
+          this.storageService.saveVideosLocal(savedVideos);
         } else {
           this.errorString = v.message;
         }

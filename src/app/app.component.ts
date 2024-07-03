@@ -19,7 +19,7 @@ export class AppComponent {
 
   toggleShow() {
 
-    console.log("invoked")
+
     this.showVideoArea = !this.showVideoArea;
   }
 }

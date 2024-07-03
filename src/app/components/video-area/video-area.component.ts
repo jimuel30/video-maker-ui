@@ -1,17 +1,21 @@
-import {Component, ElementRef, EventEmitter, Output, ViewChild} from '@angular/core';
+import {Component, ElementRef, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
 import {VideoItemComponent} from "../video-item/video-item.component";
 import {Video} from "../../model/Video";
+import {WebsocketService} from "../../service/websocket.service";
+import {StorageService} from "../../service/storage.service";
+import {NgForOf} from "@angular/common";
 
 @Component({
   selector: 'app-video-area',
   standalone: true,
   imports: [
-    VideoItemComponent
+    VideoItemComponent,
+    NgForOf
   ],
   templateUrl: './video-area.component.html',
   styleUrl: './video-area.component.scss'
 })
-export class VideoAreaComponent {
+export class VideoAreaComponent implements  OnInit{
 
 
   @Output() toggleEvent = new EventEmitter<void>();
@@ -21,17 +25,22 @@ export class VideoAreaComponent {
     this.toggleEvent.emit();
   }
 
-
-
-
-
   @ViewChild('videoWrapper1') videoWrapper1!: ElementRef;
   @ViewChild('videoWrapper2') videoWrapper2!: ElementRef;
 
-  videoQueList:any[] = []
+  constructor(private storageService:StorageService) {}
+
+
+
+  videoQueList:Video[] = []
   videoCompletedList:any[] = []
 
   queActive = true;
+
+  ngOnInit(): void {
+    this.videoQueList = this.storageService.getVideosLocal();
+  }
+
 
 
 
@@ -64,5 +73,7 @@ export class VideoAreaComponent {
       }
     }
   }
+
+
 
 }
