@@ -1,10 +1,11 @@
 import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {WebsocketService} from "../../service/websocket.service";
 import {Video} from "../../model/Video";
-import {NgClass, NgForOf} from "@angular/common";
-import {RxStomp} from "@stomp/rx-stomp";
+import {NgClass, NgForOf, NgIf} from "@angular/common";
 import {ApiCallService} from "../../service/api-call.service";
 import {StorageService} from "../../service/storage.service";
+
+
 
 
 
@@ -16,7 +17,8 @@ import {StorageService} from "../../service/storage.service";
   standalone: true,
   imports: [
     NgForOf,
-    NgClass
+    NgClass,
+    NgIf
   ],
   templateUrl: './video-item.component.html',
   styleUrl: './video-item.component.scss'
@@ -28,7 +30,7 @@ export class VideoItemComponent implements  OnInit{
   @Input() video!:Video;
   itemIcon = "fa-solid fa-spinner fa-spin";
   itemLabel = "PROCESSING";
-  videoTitle = ""
+  isDone = false;
 
 
 
@@ -65,9 +67,6 @@ export class VideoItemComponent implements  OnInit{
     });
   }
 
-
-
-
   processUpdate(fromSubscribe:boolean){
     this.itemLabel = this.video.status
 
@@ -81,7 +80,9 @@ export class VideoItemComponent implements  OnInit{
       this.storageService.updateVideosLocal(this.video)
     }
     else{
+      this.isDone = true;
       this.itemIcon = "fa-regular fa-circle-down";
+      this.itemLabel = "DOWNLOAD"
       this.storageService.updateVideosLocal(this.video)
     }
 
@@ -95,6 +96,9 @@ export class VideoItemComponent implements  OnInit{
       // Handle message processing here
     });
   }
+
+
+
   // send(): void {
   //   const video:Video = {
   //     videoId:1,

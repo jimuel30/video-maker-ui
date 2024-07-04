@@ -1,15 +1,16 @@
 <section class="col-12 p-2 d-flex flex-row p-1">
   <p class="col-10 col-xxl-11 col-lg-11 col-xl-11 col-md-11 p-0  m-0">{{video.title}}</p>
   <div class="text-success col-2 col-xxl-1 col-lg-1 col-xl-1 col-md-1 d-flex flex-column align-items-center" id="download">
-<!--    <i class="fa-regular fa-circle-down "></i>-->
-    <i [ngClass]="itemIcon"></i>
+
+    <a [href]="video.url" download [download]="video.title" *ngIf="isDone" target="_blank">
+    <i class="fa-regular fa-circle-down" ></i>
+    </a>
+
+    <i [ngClass]="itemIcon" *ngIf="!isDone"></i>
+
+
     <p class="text-success">{{itemLabel}}</p>
-<!--    <button (click)="send()">SEND</button>-->
-<!--    <button (click)="subscribe()">SUBSCRIBE</button>-->
+
 
   </div>
-
-
-
-
 </section>
