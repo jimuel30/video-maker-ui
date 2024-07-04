@@ -5,3 +5,9 @@
 #download p{
   font-size: 10px;
 }
+.col-12 p{
+  //font-size: 12px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+}

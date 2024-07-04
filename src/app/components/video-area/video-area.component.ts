@@ -38,7 +38,17 @@ export class VideoAreaComponent implements  OnInit{
   queActive = true;
 
   ngOnInit(): void {
-    this.videoQueList = this.storageService.getVideosLocal();
+
+    const localVideos = this.storageService.getVideosLocal();
+
+    localVideos.forEach(video => {
+      if (video.status === 'DONE') {
+        this.videoCompletedList.push(video);
+      } else {
+        this.videoQueList.push(video);
+      }
+    });
+
   }
 
 

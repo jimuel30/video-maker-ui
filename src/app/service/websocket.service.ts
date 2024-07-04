@@ -12,13 +12,13 @@ export class WebsocketService {
   private stompClient:any;
   private isConnectedSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
+
   constructor() {
     this.initializeWebSocketConnection();
   }
 
   initializeWebSocketConnection() {
     const socket = new SockJS(WEBSOCKET_URL);
-
     this.stompClient = new Client({
       webSocketFactory: () => socket,
       debug: (str: string) => {
@@ -26,29 +26,33 @@ export class WebsocketService {
       },
     });
 
-    this.stompClient.activate();
-
+    this.stompClient.onConnect = () => {
+      console.log('STOMP: connected to WebSocket');
       this.isConnectedSubject.next(true); // Notify connected state
+    };
 
+    this.stompClient.onStompError = (frame: any) => {
+      console.error('STOMP: error', frame);
+      this.isConnectedSubject.next(false); // Notify disconnected state
+    };
 
+    this.stompClient.activate();
   }
+
+
 
   subscribe(topic: string, callback: (message: any) => void) {
-    if (this.stompClient.connected) { // Check if connected before subscribing
-      this.stompClient.subscribe(topic, (response: any) => {
-        callback(JSON.parse(response.body));
-      });
-    } else {
-      console.error("Cannot subscribe, STOMP connection not established");
-    }
+    this.isConnectedSubject.subscribe((connected: boolean) => {
+      if (connected) {
+        this.stompClient.subscribe(topic, (response: any) => {
+          callback(JSON.parse(response.body));
+        });
+      } else {
+        console.error("Cannot subscribe, STOMP connection not established");
+        // You might want to handle retries or notify the UI appropriately
+      }
+    });
   }
-
-
-  // subscribe(topic: string, callback: (message: any) => void) {
-  //   this.stompClient.subscribe(topic, (response: any) => {
-  //     callback(JSON.parse(response.body));
-  //   });
-  // }
 
   public send(queue: string, message: string, headers: any = {}): void {
     this.stompClient.publish({
